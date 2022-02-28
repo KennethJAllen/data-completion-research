@@ -1,7 +1,11 @@
 function [Z,sigma] = AlternatingProjection(Omega,r, M0)
-%r = rank
-%Omega = unknown entries
-%M0 initial guess
+%This is the matrix completion algorithm based on work by Lai, Varghese
+
+%Omega = mask of unknown entries
+%r = rank of completion
+%M0 initial completion guess
+%Z = completion
+%sigma = singular values of completion
 
 N = 10000; %number of itterations
 sigma = zeros(1,N); %(r+1)st singular value on step k
