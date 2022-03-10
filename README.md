@@ -1,2 +1,2 @@
 # graduate_research
-My code written during graduate school
+My research on low-rank matrix and low-rank tensor completion.
