@@ -10,7 +10,6 @@
 %D is corresponding r x r x (p-r) subtensor
 
 %assumes that the first r x r sub-matrix of every mode-i unfolding of A is invertible
-%to do: search for r x r invertible submatrices of the mode-i unfoldings of A
 
 %m x n x p tensor
 m = 18;
