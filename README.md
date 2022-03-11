@@ -1,2 +1,2 @@
 # graduate_research
-My research on low-rank matrix and low-rank tensor completion.
+My graduate research on low-rank matrix and tensor completion, and maximum volume algorithms for finding dominant submatrices. 
