@@ -5,7 +5,7 @@ Consider the following 128 by 128 image of a penny.
 
 ![128 by 128 image of a penny](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/penny_picture.jpg)
 
-Suppose 25% of it is deleted at random.
+Suppose 25% of it is deleted at random such as the following.
 
 ![25% of penny missing](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/three_fourths_partially_known_penny.jpg)
 
