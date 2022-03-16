@@ -9,7 +9,7 @@ Suppose 25% of it is deleted at random such as the following.
 
 ![25% of penny missing](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/three_fourths_partially_known_penny.jpg)
 
-We would like to recover the missing entries. Using alt_proj_MVSD.m in Low_Rank_Matrix_Completion/Image_Completion/ we recover the following image.
+We would like to recover the missing entries. Using AlternatingProjection.m in Low_Rank_Matrix_Completion we recover the following image.
 
 ![penny recovered with alternating projection](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/alt_proj_recovered_penny_rank18.jpg)
 
