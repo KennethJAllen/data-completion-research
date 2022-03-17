@@ -7,7 +7,7 @@ function [X,sigma] = Alternating_Projection(Omega,r, M0)
 %Z = completion
 %sigma = singular values of completion
 
-N = 10000; %number of itterations
+N = 500; %number of itterations
 sigma = zeros(1,N); %(r+1)st singular value on step k
 
 known_entries = M0(Omega);
