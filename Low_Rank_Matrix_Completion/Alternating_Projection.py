@@ -2,8 +2,7 @@ import numpy as np
 from numpy import linalg as LA
 from matplotlib import pyplot as plt 
 
-#def alternating_projection(Omega,r,M0):
-#This is the matrix completion algorithm based on work by Lai, Varghese
+#This is the alternating projection matrix completion algorithm based on work by Lai, Varghese
 
 def random_mask(m,n,k):
     #creates a random mxn mask with exactly k true entries
@@ -14,22 +13,19 @@ def random_mask(m,n,k):
     Omega = Omega==1 #turns Omega into a logical matrix
     return Omega
 
-m = 4
-n = 3 #matrix size mxn
-r = 2; #rank of completion
-#A = np.random.rand(m,r)
-#B = np.random.rand(r,n) #random factor matrices
-A = np.array([[1, 0], [0, 1], [1, 1], [1, 2]])
-B = np.array([[1, 1, 2],[0, 1, 1]])
+m = 40
+n = 30 #matrix size mxn
+r = 5; #rank of completion
+A = np.random.rand(m,r)
+B = np.random.rand(r,n) #random factor matrices
 M = A @ B #random rank r matrix
 
 known_ratio = 0.75 #ratio of known to unknown entries
 num_known = round(known_ratio*m*n) #number of known entries
-#Omega = random_mask(m,n,num_known) #mask of unknown entries
-Omega = np.array([[1, 1, 1],[1, 1, 1],[1, 1, 0],[1, 0, 0]],dtype=bool) #mask
+Omega = random_mask(m,n,num_known) #mask of unknown entries
 known_entries = M[Omega] #records the known entries of M
 
-N = 300 #number of itterations
+N = 500 #number of itterations
 singular_values = np.zeros(N) #singular value at ech step
 X = np.copy(M) #X initial completion guess
 X[~Omega] = 0 #sets unknown entries equalo to zero
