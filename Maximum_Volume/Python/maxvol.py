@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 
 #Algorithm based on paper How to Find a Good Submatrix
 #written by K. Allen
-#finds a close to dominant rxr submatrix of nxr matrix X
+#finds a close to dominant r x r submatrix of m x r matrix X
 
 #A = X(I,:) is the resulting close to dominant submatrix
 #abs(det(A)) is close to maximum over all choices of submatrixes
@@ -17,7 +17,6 @@ X = np.random.rand(m,r)
 
 I = np.random.choice(m, r, replace=False) #indices of the initial submatrix in X
 A = X[I,:] #initial submatrix
-print(LA.det(A))
 
 if LA.cond(A) > 1e12: #initial submatrix must be nonsingular
     print("Initial submatrix is close to singular")
