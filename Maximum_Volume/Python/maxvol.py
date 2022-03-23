@@ -11,6 +11,13 @@ def maxvol(X,I):
     #abs(det(A)) is close to maximum over all choices of submatrixes
 
     epsilon = 1e-8 #tolerance
+
+    r = len(I)
+    r2 = X.shape[1]
+    if r != r2: #checks that the size of the initial guess matches the size of the matrix
+        print("The size of the initial guess does not match the width of the matrix")
+        exit()
+
     A = X[I,:] #initial submatrix
 
     if LA.cond(A) > 1e12: #initial submatrix must be nonsingular
@@ -38,8 +45,8 @@ def maxvol(X,I):
 #example
 m = 100
 r = 10 #matrix size m x r, submatrix is of size r x r
-X = np.random.rand(m,r)
 
+X = np.random.rand(m,r)
 I = np.random.choice(m, r, replace=False) #indices of the initial submatrix in X
 A_initial = X[I,:]
 print("volume of initial submatrix is", np.abs(LA.det(A_initial)))
