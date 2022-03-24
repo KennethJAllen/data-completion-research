@@ -18,8 +18,7 @@ end
 I = I_initial; %index set of submatrix rows in X
 A = X(I,:); %initial submatrix in X
 
-%initial submatrix must be nonsingular
-if cond(A) > 1e12
+if cond(A) > 1e12 %initial submatrix must be nonsingular
     error('Initial submatrix is close to singular')
 end
 

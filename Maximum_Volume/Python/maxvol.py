@@ -2,14 +2,14 @@ import numpy as np
 from numpy import linalg as LA
 from matplotlib import pyplot as plt
 
-def maxvol(X,I):
+def maxvol(X,I_initial):
     #Algorithm based on paper How to Find a Good Submatrix
     #written by K. Allen
     #finds a close to dominant r x r submatrix of m x r matrix X
 
     #A = X(I,:) is the resulting close to dominant submatrix
     #abs(det(A)) is close to maximum over all choices of submatrixes
-
+    I = I_initial.copy()
     epsilon = 1e-8 #tolerance
 
     r = len(I)
@@ -47,10 +47,9 @@ m = 100
 r = 10 #matrix size m x r, submatrix is of size r x r
 
 X = np.random.rand(m,r)
-I = np.random.choice(m, r, replace=False) #indices of the initial submatrix in X
-A_initial = X[I,:]
+I_initial = np.random.choice(m, r, replace=False) #indices of the initial submatrix in X
+A_initial = X[I_initial,:]
 print("volume of initial submatrix is", np.abs(LA.det(A_initial)))
-
-I = maxvol(X,I)
+I = maxvol(X,I_initial)
 A = X[I,:]
 print("volume of maxvol submatrix is", np.abs(LA.det(A)))

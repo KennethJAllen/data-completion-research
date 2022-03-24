@@ -22,7 +22,7 @@ r = max(r);
 r2 = size(J);
 r2 = max(r2);
 if r~=r2 %checks that initial index sizes are the same r=r2
-    error('initial submatrix is not r x r.')
+    error('initial submatrix is not rxr.')
 end
 
 row_dom = 0; %indicates if near dominant in rows
