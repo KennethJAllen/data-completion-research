@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import linalg as LA
-from matplotlib import pyplot as plt
 
 def alt_maxvol(X,I_initial,J_initial):
     #Algorithm based on paper How to Find a Good Submatrix modified for two-directional search
