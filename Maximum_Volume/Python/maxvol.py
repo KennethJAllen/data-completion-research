@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import linalg as LA
-from matplotlib import pyplot as plt
 
 def maxvol(X,I_initial):
     #Algorithm based on paper How to Find a Good Submatrix

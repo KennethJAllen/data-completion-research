@@ -1,10 +1,11 @@
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
 %from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
 
-%given an m x n x p partially known tensor T_Omega, where T_Omega has the form:
-%T_Omega = [A B;C unknowns],[D unknowns;unknowns unknowns]
+%given an m x n x p partially known tensor T_Omega, where T_Omega has the structure:
+%T_Omega(:,:,1:r) = [A B;C unknowns]
+%T_Omega(:,:,(r+1):end) = [D unknowns;unknowns unknowns]
 %completes T_Omega into a multilinear rank (r,r,r) tensor T
-%A is an r x r x r multilinear rank (r,r,r) fully known subtensor
+%A = T(1:r,1:r,1:r) is an r x r x r multilinear rank (r,r,r) fully known subtensor
 %B is corresponding r x (n-r) x r subtensor
 %C is corresponding (m-r) x r x r subtensor
 %D is corresponding r x r x (p-r) subtensor
