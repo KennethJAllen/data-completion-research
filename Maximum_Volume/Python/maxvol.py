@@ -7,7 +7,7 @@ def maxvol(X,I_initial):
     #written by K. Allen
     #finds a close to dominant r x r submatrix of m x r matrix X
 
-    #A = X(I,:) is the resulting close to dominant submatrix
+    #A = X[I,:] is the resulting close to dominant submatrix
     #abs(det(A)) is close to maximum over all choices of submatrixes
     I = I_initial.copy()
     epsilon = 1e-8 #tolerance
@@ -35,7 +35,7 @@ def maxvol(X,I_initial):
         elif k==N-1:
             print("maxvol did not converge in", N, "steps")
             exit()
-        position = np.where(Ya == y) # Get the indices of maximum element in numpy array
+        position = np.where(Ya == y) #indices of maximum element in Ya
         i = position[0][0]
         j = position[1][0] #(i,j) are the coordinates of y in Ya
         I[j] = i #replaces jth row of A with the ith row of X
@@ -48,8 +48,9 @@ r = 10 #matrix size m x r, submatrix is of size r x r
 
 X = np.random.rand(m,r)
 I_initial = np.random.choice(m, r, replace=False) #indices of the initial submatrix in X
-A_initial = X[I_initial,:]
+A_initial = X[I_initial,:] #initial submatrix guess
 print("volume of initial submatrix is", np.abs(LA.det(A_initial)))
+
 I = maxvol(X,I_initial)
 A = X[I,:]
-print("volume of maxvol submatrix is", np.abs(LA.det(A)))
+print("volume of dominant submatrix is", np.abs(LA.det(A)))

@@ -26,20 +26,17 @@ if r~=r2 %checks that initial index sizes are the same r=r2
 end
 
 row_dom = 0; %indicates if near dominant in rows
-%num_iter = 0; %number of iterations to converge
 
-%initial submatrix must be nonsingular
-if cond(A) > 1e12
+if cond(A) > 1e12 %initial submatrix must be nonsingular
     error('Initial submatrix is close to singular')
 end
 
 for k=1:1000
     Y = abs(X(:,J)/A);
-    %num_iter = num_iter+1;
     [y,linear_index_I] = max(Y(:)); %y is max in columns
     if y > 1+epsilon %if the volume change by swapping one column
         [i,j] = ind2sub([m r],linear_index_I); %[i,j] = index
-        I(j) = i; %replace jth row with ith row
+        I(j) = i; %replace jth row of A with ith row of X(:,J)
         A = X(I,J);
         column_dom = 0; %indicates not near dominant in columns
     elseif row_dom == 1
@@ -49,11 +46,10 @@ for k=1:1000
     end
     
     Z = abs(A\X(I,:));
-    %num_iter = num_iter+1;
     [z,linear_index_J] = max(Z(:)); %z is max in rows
     if z > 1+epsilon
         [p,q] = ind2sub([r n],linear_index_J); %[i,j] = index
-        J(p) = q; %replace ith column with jth row
+        J(p) = q; %replace pth column of A with qth row of X(I,:)
         A = X(I,J);
         row_dom = 0; %indicates not near dominant in rows
     elseif column_dom == 1
