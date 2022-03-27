@@ -1,7 +1,7 @@
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
 %from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
 
-%given an m x n x p partially known tensor T_Omega, where T_Omega has the structure:
+%given an m x n x p partially known tensor T_Omega, where T_Omega has the block tensor structure:
 %T_Omega(:,:,1:r) = [A B;C unknowns]
 %T_Omega(:,:,(r+1):end) = [D unknowns;unknowns unknowns]
 %completes T_Omega into a multilinear rank (r,r,r) tensor T
@@ -165,8 +165,8 @@ end
 
 function X = forget(T,r)
 %replaces entries of T in unknown positions with zeros
-%input: T(:,:,1:r) = [A B;C G], T(:,:,r+1:k) = [D F;E H]
-%output: X(:,:,1:r) = [A B;C 0], X(:,:,r+1:k) = [D 0;0 0]
+%input: T(:,:,1:r) = [A B;C G], T(:,:,r+1:p) = [D F;E H]
+%output: X(:,:,1:r) = [A B;C 0], X(:,:,r+1:p) = [D 0;0 0]
 [m,n,p] = size(T);
 X = T;
 X(r+1:m,r+1:n,1:r) = zeros(m-r,n-r,r); %sets G to zero
