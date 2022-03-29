@@ -136,14 +136,16 @@ function X = complete(T_Omega,r)
 end
 
 function X = unfold(T, i)
-%mode-i unfolding of T
+%returns the mode-i unfolding of T
+%i = 1, 2, or 3
 dim = size(T);
 X = reshape(shiftdim(T,i-1), dim(i), []);
 end
 
 function X = refold(T,tensor_size,i)
 %refolds the mode-i unfolding of T back into T
-%refold((unfold(T,i),[n m k],i) = T
+%i = 1, 2, or 3
+%refold((unfold(T,i),size(T),i) = T
 X = reshape(T, circshift(tensor_size,-i+1));
 X = shiftdim(X,-i+4);
 end

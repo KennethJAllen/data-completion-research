@@ -3,6 +3,17 @@ from numpy import linalg as LA
 
 #in progress
 
+def unfold(T, i):
+    #returns the mode-i unfolding of T
+    #i = 1, 2, or 3
+    return np.reshape(np.moveaxis(T, i-1, 0), (T.shape[i-1], -1), order='F')
+
+def refold(T, tensor_size, i):
+    #refolds the mode-i unfolding of T back into T
+    #i = 1, 2, or 3
+    #refold((unfold(T,i),np.shape(T),i) = T
+    return T
+
 def Allen_Tensor_Completion(T0):
     #written by K. Allen under Dr. Ming-Jun Lai's supervision
     #from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
@@ -51,7 +62,4 @@ for i in range(r): #generates a random rank r order three tensor
     T = T + X #T is the sum of r random rank one tensors, so has rank r with probability one
 
 T0 = forget_EFGH(T,r)
-
-print(T0)
-
 
