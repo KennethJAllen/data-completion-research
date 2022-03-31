@@ -96,10 +96,10 @@ def forget_EFGH(T,r):
     return T0
 
 #example
-m = 3
-n = 4
-p = 5 #m x n x p tensor
-r = 2 #rank of the tensor
+m = 20
+n = 19
+p = 18 #m x n x p tensor
+r = 8 #rank of the tensor
 
 T_true = np.zeros([m,n,p])
 for i in range(r): #generates a random rank r order three tensor

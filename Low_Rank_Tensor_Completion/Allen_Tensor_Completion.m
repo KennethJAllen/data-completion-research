@@ -15,11 +15,11 @@
 %assumes that the first r x r sub-matrix of every mode-i unfolding of A is invertible
 
 %m x n x p tensor
-m = 3;
-n = 4;
-p = 5;
+m = 20;
+n = 19;
+p = 18;
 
-r = 2; %rank, doesn't work for r=1
+r = 8; %rank, doesn't work for r=1
 
 %generate a random rank r tensor
 T_rand = zeros(m,n,p);
