@@ -5,6 +5,8 @@
 %T_Omega(:,:,1:r) = [A B;C unknowns]
 %T_Omega(:,:,(r+1):end) = [D unknowns;unknowns unknowns]
 %completes T_Omega into a multilinear rank (r,r,r) tensor T
+%if a multilinear rank (r,r,r) completion exists, it is unique
+
 %A = T(1:r,1:r,1:r) is an r x r x r multilinear rank (r,r,r) fully known subtensor
 %B is corresponding r x (n-r) x r subtensor
 %C is corresponding (m-r) x r x r subtensor
@@ -13,11 +15,11 @@
 %assumes that the first r x r sub-matrix of every mode-i unfolding of A is invertible
 
 %m x n x p tensor
-m = 18;
-n = 19;
-p = 20;
+m = 3;
+n = 4;
+p = 5;
 
-r = 10; %rank, doesn't work for r=1
+r = 2; %rank, doesn't work for r=1
 
 %generate a random rank r tensor
 T_rand = zeros(m,n,p);
@@ -73,8 +75,8 @@ known_ratio = num_known/(m*n*p); %ratio of number of known entries to number of 
 function X = complete(T_Omega,r)
     %completes the partially known tensor T_Omega into the rank r tensor X
     %the unknown entries of T_Omega must have the following structure
-    %T(:,:,1:r) = [A B;C G]
-    %T(:,:,(r+1):p) = [D F;E H]
+    %T_Omega(:,:,1:r) = [A B;C G]
+    %T_Omega(:,:,(r+1):p) = [D F;E H]
     %A,B,C,D are fully known, E,F,G,H are unknown
     [m,n,p] = size(T_Omega);
     A = T_Omega(1:r,1:r,1:r); %assume A has multilinear rank (r,r,r)
@@ -84,8 +86,8 @@ function X = complete(T_Omega,r)
         A3 = unfold(A,3);
         r1 = rank(A1);
         r2 = rank(A2);
-        r3 = rank(A3);
-        if any([r1 r2 r3] ~= [r r r]) %makes sure A has multilinear rank [r r r]
+        
+        if any([r1 r2] ~= [r r]) %makes sure A has multilinear rank [r r r]
             error('The multilinear rank of A is not equal to [r r r]')
         end
     else %if r=1
@@ -104,25 +106,27 @@ function X = complete(T_Omega,r)
     AJ = A1(1:r,1:r); %Assumes A1(1:r,1:r) is full rank. To do: find full rank submatrix
     B1 = unfold(B,1);
     C1 = unfold(C,1);
+    size(C1)
     CJ = C1(1:(m-r),1:r);
     D1 = unfold(D,1);
-
     G1 = (CJ/AJ)*B1; %complete G
     E1 = (CJ/AJ)*D1; %complete E
-    G = refold(G1,[m-r,n-r,r],1);
-    E = refold(E1,[m-r,r,p-r],1);
+    G = fold(G1,[m-r,n-r,r],1); %folds mode-1 unfolding of G
+    E = fold(E1,[m-r,r,p-r],1); %folds mode-1 unfolding of E
+
     A2 = unfold(A,2);
     AI = A2(1:r,1:r);
     B2 = unfold(B,2);
     BI = B2(1:(n-r),1:r);
     D2 = unfold(D,2);
     E2 = unfold(E,2);
-
-    F2 = (BI/AI)*D2;
-    H2 = (BI/AI)*E2;
-    F = refold(F2,[r,n-r,p-r],2);
-    H = refold(H2,[m-r,n-r,p-r],2);
+    F2 = (BI/AI)*D2; %comples F
+    H2 = (BI/AI)*E2; %completes H
+    F = fold(F2,[r,n-r,p-r],2); %folds mode-2 unfolding of F
+    H = fold(H2,[m-r,n-r,p-r],2); %folds mode-2 unfolding of H
+    
     X = zeros(m,n,p);
+    %assembling completion
     X(:,:,1:r) = [A B;C G];
     X(:,:,(r+1):p) = [D F;E H];
     
@@ -142,10 +146,10 @@ dim = size(T);
 X = reshape(shiftdim(T,i-1), dim(i), []);
 end
 
-function X = refold(T,tensor_size,i)
-%refolds the mode-i unfolding of T back into T
+function X = fold(T,tensor_size,i)
+%folds the mode-i unfolding of T back into T
 %i = 1, 2, or 3
-%refold((unfold(T,i),size(T),i) = T
+%fold((unfold(T,i),size(T),i) = T
 X = reshape(T, circshift(tensor_size,-i+1));
 X = shiftdim(X,-i+4);
 end
