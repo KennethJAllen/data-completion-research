@@ -8,9 +8,9 @@ This repository consists of my graduate research on low-rank matrix and tensor c
 Low-Rank matrix completion is the task of completing missing entries of a partially complete matrix subject to the constraint that the rank of the resulting matrix is minimized. This is a non-convex minimization problem, and as such is considered difficult to solve.
 
 ### Algorithms
-1. Alternating Projection
-2. Alternating Projection with MVSD
-3. Schur Maximum Volume Gradient Descent
+1. alternating projection
+2. alternating projection with MVSD
+3. schur maximum volume gradient descent
 
 ## Low-Rank Tensor Completion
 
@@ -23,11 +23,11 @@ Unlike matrices, there are multiple distinct definitions for the rank of a tenso
 Maximum volume algorithms find r by r dominant submatrices of matrices. They are used for creating low-rank approximations using the skeleton decomposition. While the singular value decomposition is the gold standard for finding low-rank approximations, the computational complexity is O(nm<sup>2</sup>) for an n by m matrix with m at most n. In comparison, the maximum volume skeleton decomposition is significantly faster, while often only increasing the error by a negligible amount.
 
 ### Algorithms
-##### for m by r matrices:
+##### for m by r matrices
 1. maxvol
 2. simple greedy maxvol
 3. greedy maxvol
-##### for m by n matrices:
+##### for m by n matrices
 4. alternating maxvol
 5. algernating greedy maxvol
 
