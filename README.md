@@ -23,11 +23,11 @@ Unlike matrices, there are multiple distinct definitions for the rank of a tenso
 Maximum volume algorithms find r by r dominant submatrices of matrices. They are used for creating low-rank approximations using the skeleton decomposition. While the singular value decomposition is the gold standard for finding low-rank approximations, the computational complexity is O(nm<sup>2</sup>) for an n by m matrix with m at most n. In comparison, the maximum volume skeleton decomposition is significantly faster, while often only increasing the error by a negligible amount.
 
 ### Algorithms
-##### m by r matrices
+##### for m by r matrices:
 1. maxvol
 2. simple greedy maxvol
 3. greedy maxvol
-##### m by n matrices
+##### for m by n matrices:
 4. alternating maxvol
 5. algernating greedy maxvol
 
