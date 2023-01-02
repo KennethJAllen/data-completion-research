@@ -1,4 +1,4 @@
-# graduate_research
+# graduate-research
 ## Introduction
 
 This repository consists of my graduate research on low-rank matrix and tensor completion, and maximum volume algorithms for finding dominant submatrices of matrices. All algorithms are implemented in MATLAB and/or Python.
