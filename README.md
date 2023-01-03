@@ -9,7 +9,7 @@ Low-Rank matrix completion is the task of completing missing entries of a partia
 
 ### Algorithms
 1. alternating projection
-2. alternating projection with MVSD
+2. alternating projection with maximum volume skeleton decomposition (MVSD)
 3. schur maximum volume gradient descent
 
 ## Low-Rank Tensor Completion
@@ -20,19 +20,19 @@ Unlike matrices, there are multiple distinct definitions for the rank of a tenso
 
 ## Maximum Volume
 
-Maximum volume algorithms find r by r dominant submatrices of matrices. They are used for creating low-rank approximations using the skeleton decomposition. While the singular value decomposition is the gold standard for finding low-rank approximations, the computational complexity is O(nm<sup>2</sup>) for an n by m matrix with m at most n. In comparison, the maximum volume skeleton decomposition is significantly faster, while often only increasing the error by a negligible amount.
+Maximum volume algorithms find $r \times r$ dominant submatrices of matrices. They are used for creating low-rank approximations using the skeleton decomposition. While the singular value decomposition is the gold standard for finding low-rank approximations, the computational complexity is $O(nm^2)$ for an $n \times m$ matrix with $m$ at most $n$. In comparison, the maximum volume skeleton decomposition is significantly faster, while often only increasing the error by a negligible amount.
 
 ### Algorithms
-##### for m by r matrices
+##### for $m \times r$ matrices
 1. maxvol
 2. simple greedy maxvol
 3. greedy maxvol
-##### for m by n matrices
+##### for $m \times n$ matrices
 4. alternating maxvol
 5. algernating greedy maxvol
 
 ## Examples
-Consider the following 128 by 128 image of a penny.
+Consider the following $128 \times 128$ image of a penny.
 
 ![128 by 128 image of a penny](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/penny_picture.jpg)
 
