@@ -14,7 +14,7 @@ Low-Rank matrix completion is the task of completing missing entries of a partia
 
 ## Low-Rank Tensor Completion
 
-Like Low-Rank matrix completion, Low-Rank tensor completion is the task of completing the missing entries of a partially complete tensor subject to the constraint that the rank of the resulting tensor is minimized. This is also a non-convex minimization problem.
+Like Low-Rank matrix completion, Low-Rank tensor completion is the task of completing the missing entries of a partially complete tensor subject to the constraint that the rank of the resulting tensor is minimized. Also like low-rank matrix completion, this is also a non-convex minimization problem.
 
 Unlike matrices, there are multiple distinct definitions for the rank of a tensor. In this repository, one tensor completion algorithm is presented which completes partially complete tensors with a particular structure of known entries subject to the constraint that the multilinear rank is minimized.
 
