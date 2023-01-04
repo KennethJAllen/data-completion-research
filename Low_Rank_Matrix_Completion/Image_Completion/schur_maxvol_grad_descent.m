@@ -11,16 +11,6 @@ plots_on = 1; %set equal to 1 for singular value plots
 load penny %P is penny picture
 [U,Sigma_P,V] = svd(P);
 
-%for loading png or jpg
-%C = imread('StarryNight.jpg');
-%C = rgb2gray(C);
-%C = double(C);
-
-%for loading pgm
-%C = imread('monkey.pgm');
-%C = im2double(C);
-%C = C*255;
-
 M = P; %which true matrix to use
 [m,n] = size(M);
 

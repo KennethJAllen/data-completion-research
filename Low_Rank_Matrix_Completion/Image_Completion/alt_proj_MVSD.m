@@ -9,16 +9,6 @@ plots_on = 0;
 
 load penny %P is penny picture
 
-%for loading png or jpg
-%C = imread('StarryNight.jpg');
-%C = rgb2gray(C);
-%C = double(C);
-
-%for loading pgm
-%C = imread('monkey.pgm');
-%C = im2double(C);
-%C = C*255;
-
 M = P; %which true matrix to use
 [m,n] = size(M);
 
