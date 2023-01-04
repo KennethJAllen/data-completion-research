@@ -34,16 +34,16 @@ Maximum volume algorithms find $r \times r$ dominant submatrices of matrices. Th
 ## Examples
 Consider the following $128 \times 128$ image of a penny.
 
-![128 by 128 image of a penny](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/penny_picture.jpg)
+![128 by 128 image of a penny](https://raw.githubusercontent.com/KennethJAllen/graduate-research/main/images/penny.jpg)
 
-Suppose 25% of it is deleted at random such as the following.
+Suppose 25% of the pixels are deleted at random.
 
-![25% of penny missing](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/three_fourths_partially_known_penny.jpg)
+![25% of penny missing](https://raw.githubusercontent.com/KennethJAllen/graduate-research/main/images/three_fourths_partial_penny.jpg)
 
 We would like to recover the missing entries. Using the alternating projection algorithm, we recover the following image.
 
-![penny recovered with alternating projection](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/alt_proj_recovered_penny_rank18.jpg)
+![penny recovered with alternating projection](https://raw.githubusercontent.com/KennethJAllen/graduate-research/main/images/alternating_projection_recovered_penny_rank18.jpg)
 
 Using the Schur maximum volume gradient descent method, we recover the following image.
 
-![penny recovered with alternating projection](https://raw.githubusercontent.com/KennethJAllen/graduate_research/main/Low_Rank_Matrix_Completion/Image_Completion/Image_Examples/MVGD_recovered_penny_rank_18.jpg)
+![penny recovered with alternating projection](https://raw.githubusercontent.com/KennethJAllen/graduate-research/main/images/maxvol_grad_descent_recovered_penny_rank_18.jpg)
