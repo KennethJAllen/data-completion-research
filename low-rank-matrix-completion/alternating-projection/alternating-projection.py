@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import linalg as LA
-from matplotlib import pyplot as plt
 
 def Alternating_Projection(M, Omega, r):
     #Alternating projection matrix completion algorithm based on work by Lai, Varghese

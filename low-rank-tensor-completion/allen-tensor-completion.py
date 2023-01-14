@@ -26,7 +26,7 @@ def Allen_Tensor_Completion(T_Omega, r):
     #T_Omega[:,:,0:r] = [[A, B],[C, G]]
     #T_Omega[:,:,r:] = [[D, F],[E, H]]
     #A, B, C, D are known
-    # E, F, G, H are unknonwn
+    #E, F, G, H are unknonwn
     #completes T_Omega into a multilinear rank (r,r,r) tensor T
     #if a multilinear rank (r,r,r) completion exists, it is unique
 
@@ -95,22 +95,27 @@ def forget_EFGH(T,r):
     T0[r:,r:,r:] = 0 #sets H to zero
     return T0
 
+def rand_rank_r_tensor(m, n, p, r):
+    #input: tensor dimensions m x n x p, rank r
+    T = np.zeros([m,n,p])
+    for i in range(r): #generates a random rank r order three tensor
+        a = np.random.rand(m)
+        b = np.random.rand(n)
+        c = np.random.rand(p)
+        A = np.tensordot(a,b,0)
+        X = np.tensordot(A,c,0) #tensor product of a, b, and c
+        T = T + X #T is the sum of r random rank one tensors, so has rank r with probability one
+    return T
+
 #example
 m = 20
 n = 19
 p = 18 #m x n x p tensor
 r = 8 #rank of the tensor
 
-T_true = np.zeros([m,n,p])
-for i in range(r): #generates a random rank r order three tensor
-    a = np.random.rand(m)
-    b = np.random.rand(n)
-    c = np.random.rand(p)
-    A = np.tensordot(a,b,0)
-    X = np.tensordot(A,c,0) #tensor product of a, b, and c
-    T_true = T_true + X #T is the sum of r random rank one tensors, so has rank r with probability one
-
+T_true = rand_rank_r_tensor(m, n, p, r)
 T_Omega = forget_EFGH(T_true,r) #initial guess
+
 T = Allen_Tensor_Completion(T_Omega, r) #completes T_Omega into multilinear rank (r,r,r) tensor T
 err = LA.norm(T-T_true) #error between completion and true soluition
 print('The error between the completion and the true solution is', err)
