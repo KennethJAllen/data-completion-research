@@ -87,3 +87,5 @@ title('partially known image')
 figure
 imshow(X/255,'InitialMagnification', 800)
 title('completed image with MVSD alternating projection')
+
+pause
