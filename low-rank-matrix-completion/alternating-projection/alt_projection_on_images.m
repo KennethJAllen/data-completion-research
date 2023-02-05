@@ -1,11 +1,11 @@
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
-%from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
+%based on work by Lai, Varghese
 
 %alternating projection method for image completion
-%projection is calculated with MVSD
+%projection calculated with SVD
 
 r = 18; %rank
-plots_on = 0;
+plots_on = 1;
 
 load penny %P is penny picture
 
@@ -14,27 +14,22 @@ M = P; %which true matrix to use
 
 frac_num_known = 0.75; %fraction of entries known
 num_known = round(m*n*frac_num_known); %number of known entries
-Omega = RandomMask(m,n,num_known); %random mask
+Omega = random_mask(m,n,num_known); %random mask
 
 X0 = zeros(m,n);
 X0(Omega) = M(Omega); %initial guess with known entries
 
-N = 1000; %number of steps
+N = 250; %number of steps
 
 X = X0;
 for k=1:N
-    I_initial = randperm(m,r); %initial rows for A
-    J_initial = randperm(n,r); %initial columns for A
-    [I,J] = alt_maxvol(X,I_initial,J_initial);
-    C = X(:,J);
-    U = X(I,J);
-    R = X(I,:);
-    X = C*(U\R); %rank r approximation of X
+    [U,S,V] = svds(X,r);
+    X = U*S*V'; %rank r approximation of X
     X(Omega) = M(Omega); %sets known entries
     X(X>255) = 255;
     X(X<0) = 0; %makes sure entries are bounded
     MSE = (1/(m*n))*norm(X-M,'fro')^2; %MSE
-    PSNR = 10*log10(65025/MSE)%peak signal to noise ratio
+    PSNR = 10*log10(65025/MSE);%peak signal to noise ratio
 end
 
 if plots_on==1
@@ -86,6 +81,4 @@ title('partially known image')
 
 figure
 imshow(X/255,'InitialMagnification', 800)
-title('completed image with MVSD alternating projection')
-
-pause
+title('completed image with alternating projection')

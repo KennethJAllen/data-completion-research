@@ -1,11 +1,11 @@
 import numpy as np
 from numpy import linalg as LA
 
-def Alternating_Projection(M, Omega, r):
-    #Alternating projection matrix completion algorithm based on work by Lai, Varghese
-    #M is initial completion guess
-    #Omega is mask
-    #r is rank of completion
+def alternating_projection(M, Omega, r):
+    #alternating projection matrix completion algorithm based on work by Lai, Varghese
+    #M = initial completion guess
+    #Omega = mask
+    #r = rank of completion
 
     N = 500 #number of itterations
     X = M.copy()
@@ -42,6 +42,6 @@ Omega = random_mask(m,n,num_known) #random mask of unknown entries
 M0 = M.copy()
 M0[~Omega] = 0 #sets unknown entries equal to zero
 
-X = Alternating_Projection(M0,Omega,r)
+X = alternating_projection(M0,Omega,r)
 err = LA.norm(X-M,2)
 print("The spectral norm error between the original and completion is",err)

@@ -1,40 +1,30 @@
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
 %from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
 
-%schur complement gradient descent method w/ maxvol algorithm for image completion
-close all
+%alternating projection method for image completion
+%projection is calculated with MVSD
 
 r = 18; %rank
-plots_on = 1; %set equal to 1 for singular value plots
+plots_on = 0;
 
-%some matrices to use
 load penny %P is penny picture
-[U,Sigma_P,V] = svd(P);
 
 M = P; %which true matrix to use
 [m,n] = size(M);
 
 frac_num_known = 0.75; %fraction of entries known
 num_known = round(m*n*frac_num_known); %number of known entries
-Omega = RandomMask(m,n,num_known); %random mask
+Omega = random_mask(m,n,num_known);
 
 X0 = zeros(m,n);
 X0(Omega) = M(Omega); %initial guess with known entries
 
-I = randperm(m,r); %random initial rows for A
-J = randperm(n,r); %random initial columns for A
+N = 1000; %number of steps
 
-N = 3000; %number of steps
-N_pre = 50; %number of preconditioning steps
-h = ones(1,N)*1e-3; %step size
-
-G = zeros(m,n);
 X = X0;
-
-%preconditions using CUR approximation with maxvol
-for i=1:N_pre
-    I_initial = randperm(m,r); %random initial rows for A
-    J_initial = randperm(n,r); %random initial columns for A
+for k=1:N
+    I_initial = randperm(m,r); %initial rows for A
+    J_initial = randperm(n,r); %initial columns for A
     [I,J] = alt_maxvol(X,I_initial,J_initial);
     C = X(:,J);
     U = X(I,J);
@@ -43,42 +33,8 @@ for i=1:N_pre
     X(Omega) = M(Omega); %sets known entries
     X(X>255) = 255;
     X(X<0) = 0; %makes sure entries are bounded
-    MSE = (1/(m*n))*norm(X(:)-M(:))^2;
-    PSNR = 10*log10(65025/MSE)%peak signal to noise ratio
-end
-
-%gradient descent
-for k=1:N
-    %maximum volume step
-    [I,J] = alt_maxvol(X,I,J); %this file may be on another folder
-    I_comp = setdiff(1:m,I); %complement of I in 1:m
-    J_comp = setdiff(1:n,J); %complement of J in 1:n
-    
-    %gradient descent step
-    A = X(I,J);
-    B = X(I,J_comp);
-    C = X(I_comp,J);
-    D = X(I_comp,J_comp);
-    S = D-(C/A)*B; %schur complement of X with respect to A
-    
-    %gradients
-    GA = (A'\C')*S*(B'/A');
-    GB = -(A'\C')*S;
-    GC = -S*(B'/A');
-    GD = S;
-    G(I,J) = GA;
-    G(I,J_comp) = GB;
-    G(I_comp,J) = GC;
-    G(I_comp,J_comp) = GD;
-    G(Omega) = 0; %sets entries in known positions equal to zero
-
-    %gradient step
-    X = X-h(k)*G;
-    X(X>255) = 255; %ensures entries are bounded, maximum value
-    X(X<0) = 0; %minimum value
-    C_norm = norm(X(:)-M(:),'inf');
-    MSE = (1/(m*n))*norm(X(:)-M(:))^2;
-    PSNR = 10*log10(65025/MSE)%peak signal to noise ratio
+    MSE = (1/(m*n))*norm(X-M,'fro')^2; %MSE
+    PSNR = 10*log10(65025/MSE); %peak signal to noise ratio
 end
 
 if plots_on==1
@@ -130,4 +86,6 @@ title('partially known image')
 
 figure
 imshow(X/255,'InitialMagnification', 800)
-title('completed image with schur-complement MV grad descent')
+title('completed image with MVSD alternating projection')
+
+pause
