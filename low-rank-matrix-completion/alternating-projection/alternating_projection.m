@@ -1,10 +1,10 @@
-function [X,sigma] = Alternating_Projection(Omega,r, M0)
+function [X, sigma] = Alternating_Projection(Omega, r, M0)
 %This is the matrix completion algorithm based on work by Lai, Varghese
 
 %Omega = mask of unknown entries
 %r = rank of completion
 %M0 initial completion guess
-%Z = completion
+%X = completion
 %sigma = singular values of completion
 
 N = 500; %number of itterations
