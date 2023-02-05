@@ -1,4 +1,4 @@
-function [I,J] = alt_greedy_maxvol(X,I_initial,J_initial)
+function [I,J] = alternating_greedy_maxvol(X,I_initial,J_initial)
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
 %from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
 %alternating version of the one directional greedy maxvol algorithm

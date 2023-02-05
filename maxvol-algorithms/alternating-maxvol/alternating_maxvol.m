@@ -1,4 +1,4 @@
-function [I,J] = alt_maxvol(X,I_initial,J_initial)
+function [I,J] = alternating_maxvol(X,I_initial,J_initial)
 %Algorithm based on paper How to Find a Good Submatrix modified for two-directional search
 %written by K. Allen under Dr. Ming-Jun Lai's supervision
 %alternating version of the one directional maxvol algorithm
