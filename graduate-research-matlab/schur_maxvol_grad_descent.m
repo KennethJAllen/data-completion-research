@@ -3,7 +3,7 @@
 
 %schur complement gradient descent method w/ maxvol algorithm for image completion
 close all
-addpath('maxvol-algorithms')
+addpath(genpath('functions'))
 
 r = 18; %rank
 plots_on = 1; %set equal to 1 for singular value plots

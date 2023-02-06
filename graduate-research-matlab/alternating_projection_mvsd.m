@@ -3,7 +3,7 @@
 
 %alternating projection method for image completion
 %projection is calculated with MVSD
-addpath('maxvol-algorithms')
+addpath(genpath('functions'))
 
 r = 18; %rank
 plots_on = 0;
