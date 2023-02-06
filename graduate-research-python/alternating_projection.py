@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import linalg as LA
+from random_mask import random_mask
 
 def alternating_projection(M, Omega, r):
     #alternating projection matrix completion algorithm based on work by Lai, Varghese
@@ -17,15 +18,6 @@ def alternating_projection(M, Omega, r):
         X = U[:,0:r] @ Sigma[0:r,0:r] @ Vh[0:r,:] #rank r projection
         X[Omega] = M[Omega] #known_entries #projection onto plane of completions
     return X #completion
-
-def random_mask(m,n,k):
-    #creates a random mxn mask with exactly k true entries
-    perm = np.random.choice(m*n, k, replace=False)
-    Omega_linear = np.zeros(m*n)
-    Omega_linear[perm] = 1
-    Omega = np.reshape(Omega_linear,(m,n))
-    Omega = Omega==1 #turns Omega into a logical matrix
-    return Omega
 
 #example
 m = 40
