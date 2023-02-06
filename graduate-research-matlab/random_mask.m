@@ -1,4 +1,4 @@
-function Omega = RandomMask(m,n,k)
+function Omega = random_mask(m,n,k)
 %creates a random mxn logical matrix (mask) Omega with exactly k ones
 entries = randperm(m*n,k);
 Omega_linear = zeros(m*n,1);

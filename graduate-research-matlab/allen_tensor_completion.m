@@ -18,7 +18,8 @@
 m = 20;
 n = 19;
 p = 18;
-r = 1; %rank, doesn't work for r=1
+
+r = 8; %rank, doesn't work for r=1
 
 %generate a random rank r tensor
 T_rand = random_rank_r_tensor(m, n, p, r);
@@ -103,8 +104,8 @@ function X = complete_tensor(T_Omega,r)
     D1 = unfold_tensor(D,1);
     G1 = (CJ/AJ)*B1; %complete G
     E1 = (CJ/AJ)*D1; %complete E
-    G = fold_to_tensor(G1,[m-r,n-r,r],1); %folds mode-1 unfolding of G
-    E = fold_to_tensor(E1,[m-r,r,p-r],1); %folds mode-1 unfolding of E
+    G = fold_tensor(G1,[m-r,n-r,r],1); %folds mode-1 unfolding of G
+    E = fold_tensor(E1,[m-r,r,p-r],1); %folds mode-1 unfolding of E
 
     A2 = unfold_tensor(A,2);
     AI = A2(1:r,1:r);
@@ -114,8 +115,8 @@ function X = complete_tensor(T_Omega,r)
     E2 = unfold_tensor(E,2);
     F2 = (BI/AI)*D2; %comples F
     H2 = (BI/AI)*E2; %completes H
-    F = fold_to_tensor(F2,[r,n-r,p-r],2); %folds mode-2 unfolding of F
-    H = fold_to_tensor(H2,[m-r,n-r,p-r],2); %folds mode-2 unfolding of H
+    F = fold_tensor(F2,[r,n-r,p-r],2); %folds mode-2 unfolding of F
+    H = fold_tensor(H2,[m-r,n-r,p-r],2); %folds mode-2 unfolding of H
     
     X = zeros(m,n,p);
     %assembling completion
@@ -138,7 +139,7 @@ dim = size(T);
 X = reshape(shiftdim(T,i-1), dim(i), []);
 end
 
-function X = fold_to_tensor(T,tensor_size,i)
+function X = fold_tensor(T,tensor_size,i)
 %folds the mode-i unfolding of T back into T
 %i = 1, 2, or 3
 %fold((unfold(T,i),size(T),i) = T
@@ -173,8 +174,8 @@ X(1:r,r+1:n,r+1:p) = zeros(r,n-r,p-r); %sets F to zero
 X(r+1:m,r+1:n,r+1:p) = zeros(m-r,n-r,p-r); %sets H to zero
 end
 
-function T_rand = random_rank_r_tensor(m, n, p, r)
-%generate a random rank r tensor
+function T_rand = random_rank_r_tensor(m,n,p,r)
+%generate a random m x n x p rank r tensor
 T_rand = zeros(m,n,p);
 for i=1:r
     a = rand(m,1);
