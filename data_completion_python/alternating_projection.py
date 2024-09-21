@@ -21,8 +21,9 @@ def alternating_projection(M, Omega, r):
         X[Omega] = M[Omega] # known_entries #projection onto plane of completions
     return X # completion
 
-if __name__ == "__main__":
-    #example
+def alternating_projection_example():
+    """An example of the alternating projection matrix completion algorithm
+    using sample parameters."""
     m = 40
     n = 30 #matrix size m x n
     r = 5 #rank of completion
@@ -40,3 +41,7 @@ if __name__ == "__main__":
     X = alternating_projection(M0, Omega, r)
     err = LA.norm(X-M, 2)
     print("The spectral norm error between the original and completion is", err)
+
+
+if __name__ == "__main__":
+    alternating_projection_example()

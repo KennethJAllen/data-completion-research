@@ -104,7 +104,7 @@ def forget_EFGH(T, r):
 def rand_rank_r_tensor(m, n, p, r):
     """input: tensor dimensions m x n x p, rank r"""
     T = np.zeros([m, n, p])
-    for i in range(r): # generates a random rank r order three tensor
+    for _ in range(r): # generates a random rank r order three tensor
         a = np.random.rand(m)
         b = np.random.rand(n)
         c = np.random.rand(p)
@@ -113,8 +113,8 @@ def rand_rank_r_tensor(m, n, p, r):
         T = T + X # T is the sum of r random rank one tensors, so has rank r with probability one
     return T
 
-if __name__ == "__main__":
-    # example
+def tensor_completion_example():
+    """An example of the tensor completion algorithm using sample parameters."""
     m = 20
     n = 19
     p = 18 # m x n x p tensor
@@ -126,3 +126,6 @@ if __name__ == "__main__":
     T = tensor_completion(T_Omega, r) # completes T_Omega into multilinear rank (r,r,r) tensor T
     err = LA.norm(T-T_true) # error between completion and true soluition
     print('The error between the completion and the true solution is', err)
+
+if __name__ == "__main__":
+    tensor_completion_example()
