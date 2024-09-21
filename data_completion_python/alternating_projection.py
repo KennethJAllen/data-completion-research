@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import linalg as LA
-from utils import random_mask
+from data_completion_python import utils
 
 def alternating_projection(M, Omega, r):
     """
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     known_ratio = 0.75 #ratio of known to unknown entries
     num_known = round(known_ratio * m * n) #number of known entries
-    Omega = random_mask(m, n, num_known) #random mask of unknown entries
+    Omega = utils.random_mask(m, n, num_known) #random mask of unknown entries
 
     M0 = M.copy()
     M0[~Omega] = 0 #sets unknown entries equal to zero
