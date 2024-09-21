@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import linalg as LA
-from random_mask import random_mask
+from utils import random_mask
 
 def alternating_projection(M, Omega, r):
     """
@@ -30,8 +30,8 @@ if __name__ == "__main__":
     B = np.random.rand(r, n) #random factor matrices
     M = A @ B #random rank r matrix
 
-    KNWON_RATIO = 0.75 #ratio of known to unknown entries
-    num_known = round(KNWON_RATIO * m * n) #number of known entries
+    known_ratio = 0.75 #ratio of known to unknown entries
+    num_known = round(known_ratio * m * n) #number of known entries
     Omega = random_mask(m, n, num_known) #random mask of unknown entries
 
     M0 = M.copy()

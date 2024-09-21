@@ -1,3 +1,4 @@
+"""Utility functions."""
 import numpy as np
 
 def random_mask(m: int, n: int, k: int):

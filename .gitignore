@@ -1,2 +1,3 @@
 venv/
 graduate-research-python/__pycache__
+*.pyc
