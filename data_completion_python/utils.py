@@ -18,3 +18,10 @@ def forget_compliment(X: np.ndarray, I: np.ndarray, J: np.ndarray) -> np.ndarray
     mask[:, J] = True # Set the mask to True for columns in J
     X_copy[~mask] = 0
     return X_copy
+
+def psnr(img1: np.ndarray, img2: np.ndarray, max_pixel_value: float = 255.0):
+    """Peak signal to nosie ratio."""
+    mse = np.mean((img1 - img2) ** 2)
+    if mse == 0:
+        return float('inf')  # Infinite PSNR if MSE is zero
+    return 10 * np.log10((max_pixel_value ** 2) / mse)
