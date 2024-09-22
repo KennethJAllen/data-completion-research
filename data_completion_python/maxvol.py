@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import linalg as LA
 
-def maxvol(X, I_initial):
+def maxvol(X: np.ndarray, I_initial: np.ndarray) -> np.ndarray:
     """
     Algorithm based on paper How to Find a Good Submatrix written by K. Allen.
     Finds a close to dominant r x r submatrix of m x r matrix X.
@@ -41,7 +41,7 @@ def maxvol(X, I_initial):
 
     return I
 
-def alt_maxvol(X, I_initial, J_initial):
+def alternating_maxvol(X: np.ndarray, I_initial: np.ndarray, J_initial: np.ndarray) -> tuple[np.ndarray]:
     """
     Algorithm based on paper How to Find a Good Submatrix modified for two-directional search
     written by K. Allen
@@ -55,14 +55,14 @@ def alt_maxvol(X, I_initial, J_initial):
     J = J_initial.copy()
     epsilon = 1e-8 # tolerance
 
-    r = len(I)
-    r2 = len(J)
-    if r != r2: # checks that initial submatrix is r x r
+    rank = len(I)
+    if rank != len(J): # checks that initial submatrix is r x r
         raise ValueError("initial submatrix is not r x r")
 
     A = X[I,:][:,J] # initial submatrix
-    if LA.cond(A) > 1e12: # initial submatrix must be nonsingular
-        raise ValueError("Initial submatrix is close to singular")
+    initial_rank = np.linalg.matrix_rank(A)
+    if initial_rank != rank: # initial submatrix should be nonsingular
+        print(f"Warning: Submatrix in positions I and J is not invertible. Rank {initial_rank} when expecting rank {rank}.")
 
     row_dom = False # indicates if near dominant in rows
     column_dom = False # indicates if near dominant in columns
@@ -100,9 +100,27 @@ def alt_maxvol(X, I_initial, J_initial):
         else:
             row_dom = True # indicates that A is near dominant in rows
 
-        if k==N-1:
+        if k == N-1:
             raise ValueError(f"alt_maxvol did not converge in {N} steps")
     return I, J
+
+def cur_decomposition(X: np.ndarray, I: np.ndarray, J: np.ndarray) -> np.ndarray:
+    """Returns the CUR decomposition of X 
+    with respect to the submatrix in given row indices I
+    and column indices J."""
+    rank = len(I)
+    if rank != len(J):
+        raise ValueError("Length of I and J must be equal.")
+    C = X[:,J]
+    A = X[I,:][:,J]
+    R = X[I,:]
+    submatrix_rank = np.linalg.matrix_rank(A)
+    if submatrix_rank != rank:
+        print(f"Warning: Submatrix in positions I and J is not invertible. Rank {submatrix_rank} when expecting rank {rank}.")
+    U = np.linalg.pinv(A)
+    return C @ U @ R
+
+# Examples
 
 def maxvol_example(m: int = 100, r: int = 10) -> None:
     """Example for how to use the maxvol function.
@@ -130,7 +148,7 @@ def alternating_maxvol_example(m: int = 400, n: int = 500, r: int = 10) -> None:
     initial_vol = np.abs(LA.det(A_initial))
     print(f"The volume of the initial {r} by {r} submatrix in the {m} by {n} matrix is {round(initial_vol, 6)}.")
 
-    I, J = alt_maxvol(X,I_initial,J_initial)
+    I, J = alternating_maxvol(X,I_initial,J_initial)
     A = X[I,:][:,J]
     maximum_volume = np.abs(LA.det(A))
     print(f"The volume of the domainant {r} by {r} submatrix is {round(maximum_volume, 6)}.")

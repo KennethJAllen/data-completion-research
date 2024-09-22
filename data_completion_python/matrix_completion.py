@@ -15,13 +15,18 @@ def alternating_projection(M: np.ndarray, mask: np.ndarray, r: int, n_iters: int
     """
 
     X = M.copy()
+    error_threshold = 1e-8
 
     for _ in range(n_iters):
         U, S, Vh = LA.svd(X) # singular value decompostion of X
         Sigma = np.zeros(np.shape(M))
         np.fill_diagonal(Sigma,S) # diagonal matrix of singular values
+        X_prev = X
         X = U[:,:r] @ Sigma[:r,:r] @ Vh[:r,:] # rank r projection
         X[mask] = M[mask] # known_entries #projection onto plane of completions
+        error = LA.norm(X - X_prev, 2)
+        if error < error_threshold:
+            break
     return X # completion
 
 def alternating_projection_example(m: int = 40, n: int = 30, r: int = 5) -> None:
