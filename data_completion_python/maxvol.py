@@ -3,11 +3,10 @@ from numpy import linalg as LA
 
 def maxvol(X, I_initial):
     """
-    Algorithm based on paper How to Find a Good Submatrix
-    written by K. Allen
-    finds a close to dominant r x r submatrix of m x r matrix X
+    Algorithm based on paper How to Find a Good Submatrix written by K. Allen.
+    Finds a close to dominant r x r submatrix of m x r matrix X.
 
-    A = X[I,:] is the resulting close to dominant submatrix
+    A = X[I,:] is the resulting close to dominant submatrix.
     abs(det(A)) is close to maximum over all choices of submatrixes
     """
     I = I_initial.copy()
@@ -102,10 +101,10 @@ def alt_maxvol(X, I_initial, J_initial):
             row_dom = True # indicates that A is near dominant in rows
 
         if k==N-1:
-            raise ValueError("alt_maxvol did not converge in", N, "steps")
-    return I,J
+            raise ValueError(f"alt_maxvol did not converge in {N} steps")
+    return I, J
 
-def maxvol_example(m: int = 100, r: int = 10):
+def maxvol_example(m: int = 100, r: int = 10) -> None:
     """Example for how to use the maxvol function.
     Matrix size m x r, submatrix is of size r x r"""
 
@@ -120,7 +119,7 @@ def maxvol_example(m: int = 100, r: int = 10):
     maximum_volume = np.abs(LA.det(A))
     print(f"The volume of the domainant {r} by {r} submatrix is {round(maximum_volume, 6)}.")
 
-def alternating_maxvol_example(m: int = 400, n: int = 500, r: int = 10):
+def alternating_maxvol_example(m: int = 400, n: int = 500, r: int = 10) -> None:
     """Example for how to use the maxvol function.
     Matrix size m x r, submatrix is of size r x r."""
 

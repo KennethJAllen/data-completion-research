@@ -1,18 +1,20 @@
 import numpy as np
 from numpy import linalg as LA
 
-def unfold(T, i):
+def unfold(T: np.ndarray, i: int) -> np.ndarray:
     """
-    returns the mode-i unfolding of T
+    Inputs: Tensor T, mode i.
+    Output: the mode-i unfolding of tensor T.
     i = 1, 2, or 3
     """
     return np.reshape(np.moveaxis(T, i-1, 0), (T.shape[i-1], -1), order='F')
 
-def fold(X, tensor_shape, i):
+def fold(X: np.ndarray, tensor_shape: tuple[int], i: int) -> np.ndarray:
     """
-    refolds the mode-i unfolding of T back into T
-    i = 1, 2, or 3
-    fold(unfold(T,i),np.shape(T),i) = T
+    Folds the mode-i unfolding of T back into T.
+    Input: np.ndarray X, the mode i unfolding of T, tensor_shape, the shape of T.
+    i = 1, 2, or 3.
+    fold is the inverse of unfold in the sense that fold(unfold(T,i), np.shape(T), i) = T
     """
     # move element of tuple tensor_shape in position i-1 to front
     ts = list(tensor_shape) # converts tuple tensor_shape to list
@@ -21,7 +23,7 @@ def fold(X, tensor_shape, i):
 
     return np.moveaxis(np.reshape(X, shift_shape, order='F'), 0, i-1)
 
-def tensor_completion(T_Omega, r):
+def tensor_completion(T_Omega: np.ndarray, r: int) -> np.ndarray:
     """
     written by K. Allen under Dr. Ming-Jun Lai's supervision
     from K. Allen's dissertation A Geometric Approach to Low-Rank Matrix and Tensor Completion
@@ -44,7 +46,6 @@ def tensor_completion(T_Omega, r):
     (m, n, p) = np.shape(T)
 
     A = T[:r, :r, :r] # assumes has multilinear rank (r,r,r)
-    print(np.shape(A))
     A1 = unfold(A, 1) # mode-1 unfolding of A
     A2 = unfold(A, 2) # mode-2 unfolding of A
 
@@ -87,12 +88,12 @@ def tensor_completion(T_Omega, r):
     T[r:, r:, r:] = H
     return T
 
-def forget_EFGH(T, r):
+def forget_EFGH(T: np.ndarray, r: int) -> np.ndarray:
     """
     if T has the tensor block structure:
     T[:, :, :r] = [[A,B],[C,G]]
     T[:, :, r:] = [[D,F],[E,H]]
-    replaces entries in positions E, F, G, and H with zeros
+    replaces entries in positions E, F, G, and H with zeros.
     """
     T0 = T.copy()
     T0[r:, r:, :r] = 0 # sets G to zero
@@ -101,8 +102,10 @@ def forget_EFGH(T, r):
     T0[r:, r:, r:] = 0 # sets H to zero
     return T0
 
-def rand_rank_r_tensor(m, n, p, r):
-    """input: tensor dimensions m x n x p, rank r"""
+def rand_rank_r_tensor(dims: tuple[int], r: int):
+    """Input: dims = (m, n, p), rank r.
+    Output: random m x n x p tensor T of rank R"""
+    m, n, p = dims
     T = np.zeros([m, n, p])
     for _ in range(r): # generates a random rank r order three tensor
         a = np.random.rand(m)
@@ -113,19 +116,16 @@ def rand_rank_r_tensor(m, n, p, r):
         T = T + X # T is the sum of r random rank one tensors, so has rank r with probability one
     return T
 
-def tensor_completion_example():
-    """An example of the tensor completion algorithm using sample parameters."""
-    m = 20
-    n = 19
-    p = 18 # m x n x p tensor
-    r = 8 # rank of the tensor
+def tensor_completion_example(dims: tuple[int] = (20, 19, 18), r: int = 8) -> None:
+    """An example of the tensor completion algorithm using sample parameter.
+    Default: dimensions dims = (20, 19, 18). rank r = 8."""
 
-    T_true = rand_rank_r_tensor(m, n, p, r)
+    T_true = rand_rank_r_tensor(dims, r)
     T_Omega = forget_EFGH(T_true, r) # initial guess
 
     T = tensor_completion(T_Omega, r) # completes T_Omega into multilinear rank (r,r,r) tensor T
     err = LA.norm(T-T_true) # error between completion and true soluition
-    print('The error between the completion and the true solution is', err)
+    print(f'The error between the completion and the true solution is {err}')
 
 if __name__ == "__main__":
     tensor_completion_example()
