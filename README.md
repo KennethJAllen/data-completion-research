@@ -33,14 +33,20 @@ Low-Rank matrix completion is the task of completing missing entries of a partia
 
 ### Algorithms
 1. alternating projection
-2. alternating projection with maximum volume skeleton decomposition (MVSD)
-3. schur maximum volume gradient descent
+   * `data_completion_python\matrix_completion.py`
+   * `data_completion_matlab\alternating_projection_images.m`
+3. alternating projection with maximum volume skeleton decomposition (MVSD)
+   * `data_completion_matlab\alternating_projection_mvsd.m`
+5. schur maximum volume gradient descent
+   * `data_completion_matlab\schur_maxvol_gradient_descent.m`
 
 ## 🧊 Low-Rank Tensor Completion
 
 Like Low-Rank matrix completion, Low-Rank tensor completion is the task of completing the missing entries of a partially complete tensor subject to the constraint that the rank of the resulting tensor is minimized. Also like low-rank matrix completion, it is also a non-convex minimization problem.
 
 Unlike matrices, there are multiple distinct definitions for the rank of a tensor. In this repository, one tensor completion algorithm is presented which completes partially complete tensors with a particular structure of known entries subject to the constraint that the multilinear rank is minimized.
+
+Python and MATLAB tensor completion via generalized CUR decomposition functions can be found in `data_completion_python\tensor_completion.py` and `data_completion_matlab\tensor_completion_demo.m`.
 
 ## 🔼 Maximum Volume
 
@@ -49,25 +55,53 @@ Maximum volume algorithms find $r \times r$ dominant submatrices of matrices. Th
 ### Algorithms
 ##### for $m \times r$ matrices
 1. maxvol
-2. simple greedy maxvol
+   * `data_completion_python\maxvol.py`
+   * `data_completion_matlab\functions\maxvol-algorithms\greedy_maxvol.m`
 3. greedy maxvol
+   * `data_completion_matlab\functions\maxvol-algorithms\greedy_maxvol.m`
+
 ##### for $m \times n$ matrices
-4. alternating maxvol
+3. alternating maxvol
+   * `data_completion_python\maxvol.py`
+   * `data_completion_matlab\functions\maxvol-algorithms\alternating_maxvol.m`
 5. algernating greedy maxvol
+   * `data_completion_matlab\functions\maxvol-algorithms\alternating_greedy_maxvol.m`
 
 ## Examples 🖼️
-Consider the following $128 \times 128$ image of a penny.
+A demo notebook for python scripts can be found in `notebooks/demo.ipynb`.
 
-![128 by 128 image of a penny](images/input/penny.jpg)
+### Image Completion
 
-Suppose 25% of the pixels are deleted at random.
+Consider the following $128 \times 128$ image of a penny:
 
-![25% of penny missing](images/output/three_fourths_partial_penny.jpg)
+![penny](images/input/penny.jpg)
 
-We would like to recover the missing entries. Using the alternating projection algorithm, we recover the following image.
+Suppose 25% of the pixels are deleted at random:
+
+![penny missing](images/output/three_fourths_partial_penny.jpg)
+
+We would like to recover the missing entries. Using the alternating projection algorithm, we recover the following image:
 
 ![penny recovered with alternating projection](images/output/alternating_projection_recovered_penny_rank18.jpg)
 
-Using the Schur maximum volume gradient descent method, we recover the following image.
+Using the Schur maximum volume gradient descent method, we recover the following image:
 
 ![penny recovered with alternating projection](images/output/maxvol_grad_descent_recovered_penny_rank_18.jpg)
+
+### Maximum Volume CUR Decomposition
+
+Maximum volume algorithms find close to maximum volume submatrices of a matrix. Here the volume of a matrix is the absolute value of the determinant.
+
+Maximum volume submatrices are important to find because they minimize the error of the CUR decomposition of the matrix if they matrix is high rank.
+
+Conisder the following $512 x 512 image of a house:
+
+![house](images/input/house.png)
+
+We take the CUR decomposition with respect to rows and columns chosen by the alternating maximum volume algorithm.
+
+For comparison, we also show the results of the CUR decomposition with respect to arbitrarily chosen columns and rows.
+
+The quality of the decomposition is measured by the peak signal to nosie ratio (PSNR). The PSNR of the CUR decomposition is much better when taken with respect to a maximum volume submatrix.
+
+![house_cur](images/output/demo/cur_img_compression.png)
