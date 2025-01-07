@@ -3,7 +3,7 @@ from numpy import linalg as LA
 
 def maxvol(X: np.ndarray, I_initial: np.ndarray) -> np.ndarray:
     """
-    Algorithm based on paper How to Find a Good Submatrix written by K. Allen.
+    Algorithm based on paper How to Find a Good Submatrix.
     Finds a close to dominant r x r submatrix of m x r matrix X.
 
     A = X[I,:] is the resulting close to dominant submatrix.
