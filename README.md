@@ -67,7 +67,7 @@ Maximum volume algorithms find $r \times r$ dominant submatrices of matrices. Th
 5. algernating greedy maxvol
    * `data_completion_matlab\functions\maxvol-algorithms\alternating_greedy_maxvol.m`
 
-## Examples 🖼️
+## 🖼️ Examples
 A demo notebook for python scripts can be found in `notebooks/demo.ipynb`.
 
 ### Image Completion
